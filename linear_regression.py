@@ -45,6 +45,16 @@ class LinearRegression:
             row[0] = (float(row[0]) - self.mileage_mean) / self.mileage_std
             row[1] = (float(row[1]) - self.price_mean) / self.price_std
 
+    def compute_mean_squared_error(self):
+        total_error = 0.0
+        for row in self.data[1:]:
+            mileage = float(row[0])
+            price = float(row[1])
+            prediction = self.theta_0 + self.theta_1 * mileage
+            error = prediction - price
+            total_error += error ** 2
+        return total_error / len(self.data[1:])
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
