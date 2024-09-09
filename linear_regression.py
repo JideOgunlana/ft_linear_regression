@@ -91,6 +91,18 @@ class LinearRegression:
             file.write(f"{self.price_mean}\n")
             file.write(f"{self.price_std}\n")
 
+    def plot_data(self):
+        miles = [float(row[0]) * self.mileage_std + self.mileage_mean for row in self.data[1:]]
+        prices = [float(row[1]) * self.price_std + self.price_mean for row in self.data[1:]]
+
+        plt.scatter(miles, prices, color='red', label='Data')
+        plt.plot(miles, [self.theta_0 * ((mile - self.mileage_mean) / self.mileage_std) + self.theta_1 for mile in miles], color='blue', label='Fit')
+        plt.xlabel('Mileage')
+        plt.ylabel('Price')
+        plt.title('Linear Regression')
+        plt.legend()
+        plt.show()
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python linear_regression.py <dataset.csv> [flags]")
