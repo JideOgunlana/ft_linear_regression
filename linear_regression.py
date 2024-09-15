@@ -105,7 +105,7 @@ class LinearRegression:
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python linear_regression.py <dataset.csv> [flags]")
+        print("Usage: python linear_regression.py <dataset.csv>")
         sys.exit(1)
 
     lr = LinearRegression()
