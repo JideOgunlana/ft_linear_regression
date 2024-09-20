@@ -13,21 +13,22 @@ class LinearRegression:
         self.normalize_data()
 
     def load_data(self):
-        if len(sys.argv) > 1:
-            self.filename = sys.argv[1]
-        else:
-            self.filename = input("Enter the dataset file name: ")
+        # Check if 'data.csv' is present in the current directory
+        default_filename = "data.csv"
+        
+        # Check if the file exists and is accessible
+        if not os.path.isfile(default_filename) or not os.access(default_filename, os.R_OK):
+            sys.exit(f"Error: '{default_filename}' not found or cannot be read. Please ensure 'data.csv' is in the same directory as linear_regression.py.")
+        
+        self.filename = default_filename
+        print(f"Loading data from {self.filename}")
 
-        if not os.path.isfile(self.filename):
-            sys.exit(f"Error: File {self.filename} does not exist.")
-        
-        if not os.access(self.filename, os.R_OK):
-            sys.exit(f"Error: Access denied for {self.filename}.")
-        
+        # Read the data from the CSV file
         with open(self.filename, 'r') as file:
             reader = csv.reader(file)
             self.data = [row for row in reader]
         
+        # Check if the file has enough data
         if len(self.data) < 2:
             sys.exit("Error: Data file is empty or has insufficient data.")
 
@@ -104,10 +105,6 @@ class LinearRegression:
         plt.show()
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python linear_regression.py <dataset.csv>")
-        sys.exit(1)
-
     lr = LinearRegression()
     lr.train()
     lr.plot_data()
